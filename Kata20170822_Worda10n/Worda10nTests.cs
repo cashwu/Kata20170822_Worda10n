@@ -37,6 +37,12 @@ namespace Kata20170822_Worda10n
             AbbreviateShouldBe("my. dog, isn't f5g v2y w2l.", "my. dog, isn't feeling very well.");
         }
 
+        [TestMethod]
+        public void input_random_test()
+        {
+            AbbreviateShouldBe("s2s's2s. b5n; s2s; a, m8c'the'd3y", "sits'sits. balloon; sits; a, monolithic'the'doggy");
+        }
+
         private static void AbbreviateShouldBe(string expected, string input)
         {
             var abbreviator = new Abbreviator();
@@ -54,21 +60,16 @@ namespace Kata20170822_Worda10n
 
         private static string SymbolReviate(string item)
         {
-            var symbol = new[] { ',', '\'', '.' };
+            var symbol = new[] { '-', ',', '\'', '.', ';', ':' };
 
             foreach (var s in symbol)
             {
                 if (item.Contains(s))
                 {
-                    return string.Join(s.ToString(), item.Split(s).Select(Reviate));
+                    return string.Join(s.ToString(), item.Split(s).Select(SymbolReviate));
                 }
             }
 
-            return Reviate(item);
-        }
-
-        private static string Reviate(string item)
-        {
             return item.Length < 4 ? item : $"{item.First()}{item.Length - 2}{item.Last()}";
         }
     }
