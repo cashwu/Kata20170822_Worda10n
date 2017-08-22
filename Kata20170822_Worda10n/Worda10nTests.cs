@@ -19,6 +19,12 @@ namespace Kata20170822_Worda10n
             AbbreviateShouldBe("f5g", "feeling");
         }
 
+        [TestMethod]
+        public void input_are_feeling_should_return_are_f5g()
+        {
+            AbbreviateShouldBe("are f5g", "are feeling");
+        }
+
         private static void AbbreviateShouldBe(string expected, string input)
         {
             var abbreviator = new Abbreviator();
@@ -36,7 +42,11 @@ namespace Kata20170822_Worda10n
                 return input;
             }
 
-            return $"{input.First()}{input.Length-2}{input.Last()}";
+            var inputArray = input.Split(' ');
+
+            inputArray = inputArray.Select(item => item.Length < 4 ? item : $"{item.First()}{item.Length - 2}{item.Last()}").ToArray();
+            
+            return string.Join(" ", inputArray);
         }
     }
 }
