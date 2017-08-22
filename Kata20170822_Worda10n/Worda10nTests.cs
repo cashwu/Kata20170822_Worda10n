@@ -31,6 +31,12 @@ namespace Kata20170822_Worda10n
             AbbreviateShouldBe("isn't are", "isn't are");
         }
 
+        [TestMethod]
+        public void input_i_should_return_i()
+        {
+            AbbreviateShouldBe("my. dog, isn't f5g v2y w2l.", "my. dog, isn't feeling very well.");
+        }
+
         private static void AbbreviateShouldBe(string expected, string input)
         {
             var abbreviator = new Abbreviator();
@@ -43,16 +49,7 @@ namespace Kata20170822_Worda10n
     {
         public string Abbreviate(string input)
         {
-            if (input.Length < 4)
-            {
-                return input;
-            }
-
-            var inputArray = input.Split(' ');
-            var symbol = new[] { ',', '\'', '.' };
-            inputArray = inputArray.Select(item => item.Any(a => symbol.Contains(a)) ? SymbolReviate(item) : Reviate(item)).ToArray();
-
-            return string.Join(" ", inputArray);
+            return string.Join(" ", input.Split(' ').Select(SymbolReviate));
         }
 
         private static string SymbolReviate(string item)
@@ -67,7 +64,7 @@ namespace Kata20170822_Worda10n
                 }
             }
 
-            return item;
+            return Reviate(item);
         }
 
         private static string Reviate(string item)
